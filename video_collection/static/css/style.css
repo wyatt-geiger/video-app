@@ -1,0 +1,11 @@
+.navigation {
+    text-align: center;
+    margin: 10 px;
+    
+}
+
+.navigation > a {
+    border-style: double;
+    color: white;
+    padding: 5px;
+}
