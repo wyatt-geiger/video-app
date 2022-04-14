@@ -16,6 +16,16 @@ class Video(models.Model):
             raise ValidationError(f'Not a YouTube URL {self.url}')
 
         url_components = parse.urlparse(self.url)
+
+        if url_components.scheme != 'https':
+            raise ValidationError(f'Not a YouTube URL {self.url}')
+        
+        if url_components.netloc != 'www.youtube.com':
+            raise ValidationError(f'Not a YouTube URL {self.url}')
+
+        if url_components.path != '/watch':
+            raise ValidationError(f'Not a YouTube URL {self.url}')
+
         query_string = url_components.query
         if not query_string:
             raise ValidationError(f'Invalid YouTube URL {self.url}')

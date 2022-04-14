@@ -11,7 +11,7 @@ from .models import Video
 
 def home(request):
     app_name = 'Podcasts'
-    return render(request, 'video_collection/home.html')
+    return render(request, 'video_collection/home.html', {'app_name': app_name})
 
 def add(request):
     if request.method == 'POST':
@@ -27,9 +27,9 @@ def add(request):
                 messages.warning(request, 'That video has already been added')
     # if the request method is POST and the new video form is valid, it will be saved to the database
     # otherwise, the page will reload
-        else:
-            messages.warning(request, 'Please check the data entered.')
-            return render(request, 'video_collection/add.html', {'new_video_form': new_video_form})
+        
+        messages.warning(request, 'Please check the data entered.')
+        return render(request, 'video_collection/add.html', {'new_video_form': new_video_form})
     
     new_video_form = VideoForm()
     return render(request, 'video_collection/add.html', {'new_video_form': new_video_form})
