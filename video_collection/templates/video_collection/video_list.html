@@ -19,8 +19,9 @@
 
 {% for video in videos %}
 
+    <!-- Display each video in the video list -->
     <div>
-        <h3>{{ video.name }}</h3>
+        <a href="{% url 'video_details' video.pk %}"><h3>{{ video.name }}</h3></a>
         <p>{{ video.notes }}</p>
         <iframe width="420" height="315"
             src="https://youtube.com/embed/{{ video.video_id }}">

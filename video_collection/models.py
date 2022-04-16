@@ -12,6 +12,7 @@ class Video(models.Model):
     def save(self, *args, **kwargs):
         # extract the video ID from a youtube url
 
+        # various ValidationErrors that will occur if the YouTube link does not follow specific patterns
         if not self.url.startswith('https://www.youtube.com/watch'):
             raise ValidationError(f'Not a YouTube URL {self.url}')
 
@@ -33,7 +34,7 @@ class Video(models.Model):
         v_parameters_list = parameters.get('v') # return None if no key found
         if not v_parameters_list: # checking if None or empty list
             raise ValidationError(f'Invalid Youtube URL {self.url}')
-        self.video_id = v_parameters_list[0] # string
+        self.video_id = v_parameters_list[0]
         
         super().save(*args, **kwargs)
 

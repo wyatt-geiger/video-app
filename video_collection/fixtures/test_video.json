@@ -1,0 +1,12 @@
+[
+    {
+        "model": "video_collection.video",
+        "pk":1,
+        "fields":{
+            "name":"abc",
+            "url":"https://www.youtube.com/watch?v=123",
+            "notes":"example",
+            "video_id":"123"
+        }
+    }
+]

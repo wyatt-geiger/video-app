@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
@@ -6,8 +6,6 @@ from django.db.models.functions import Lower
 from .forms import VideoForm, SearchForm
 from .models import Video
 
-
-# Create your views here.
 
 def home(request):
     app_name = 'Podcasts'
@@ -18,6 +16,7 @@ def add(request):
         new_video_form = VideoForm(request.POST)
         if new_video_form.is_valid():
             
+            # try-except to ensure that the video form is valid, otherwise errors will be raised
             try:
                 new_video_form.save()
                 return redirect('video_list')
@@ -46,5 +45,13 @@ def video_list(request):
         search_form = SearchForm()
         videos = Video.objects.order_by('name')
 
-    videos = Video.objects.all()
+    videos = Video.objects.all() # creates a list of all the video entries
     return render(request, 'video_collection/video_list.html', {'videos': videos, 'search_form': search_form})
+
+def video_details(request, video_pk):
+
+    video = get_object_or_404(Video, pk=video_pk) # grabs the video's primary key value to display which will be used to display only the video that has that primary key
+                                                  # will 404 if no video with that primary key exists
+    
+    return render(request, 'video_collection/video_details.html', {'video': video})
+    

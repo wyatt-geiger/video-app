@@ -6,6 +6,7 @@
     <title>Video Collection</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Imports the Water CSS stylesheet -->
 </head>
 
 <body>
@@ -15,6 +16,7 @@
 
     <hr>
 
+    <!-- Adds navigation so the user can jump to any other page -->
     <div class="navigation">
         <a href="{% url 'home' %}">Home</a>
         <a href="{% url 'video_list' %}">Video List</a>
