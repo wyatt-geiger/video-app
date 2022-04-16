@@ -121,7 +121,29 @@ class TestVideoList(TestCase):
 
 
 class TestVideoSearch(TestCase):
-    pass
+    def test_video_search_matches(self):
+        v1 = Video.objects.create(name='ABC', notes='example', url='https://www.youtube.com/watch?v=456')
+        v2 = Video.objects.create(name='nope', notes='example', url='https://www.youtube.com/watch?v=789')
+        v3 = Video.objects.create(name='abc', notes='example', url='https://www.youtube.com/watch?v=123')
+        v4 = Video.objects.create(name='hello aBc!!!', notes='example', url='https://www.youtube.com/watch?v=101')
+        
+        expected_video_order = [v1, v3, v4]
+        response = self.client.get(reverse('video_list') + '?search_term=abc')
+        videos_in_template = list(response.context['videos'])
+        self.assertEqual(expected_video_order, videos_in_template)
+
+
+    def test_video_search_no_matches(self):
+        v1 = Video.objects.create(name='ABC', notes='example', url='https://www.youtube.com/watch?v=456')
+        v2 = Video.objects.create(name='nope', notes='example', url='https://www.youtube.com/watch?v=789')
+        v3 = Video.objects.create(name='abc', notes='example', url='https://www.youtube.com/watch?v=123')
+        v4 = Video.objects.create(name='hello aBc!!!', notes='example', url='https://www.youtube.com/watch?v=101')
+        
+        expected_video_order = []  # empty list 
+        response = self.client.get(reverse('video_list') + '?search_term=kittens')
+        videos_in_template = list(response.context['videos'])
+        self.assertEqual(expected_video_order, videos_in_template)
+        self.assertContains(response, 'No videos found.')
 
 class TestVideoModel(TestCase):
     
