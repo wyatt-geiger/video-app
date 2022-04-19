@@ -45,7 +45,6 @@ def video_list(request):
         search_form = SearchForm()
         videos = Video.objects.order_by('name')
 
-    videos = Video.objects.all() # creates a list of all the video entries
     return render(request, 'video_collection/video_list.html', {'videos': videos, 'search_form': search_form})
 
 def video_details(request, video_pk):
